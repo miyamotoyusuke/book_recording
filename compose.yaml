@@ -1,0 +1,9 @@
+services:
+  python3:
+    restart: always
+    build: .
+    container_name: 'reading_record'
+    working_dir: '/workspace'
+    tty: true
+    volumes:
+      - .:/workspace
