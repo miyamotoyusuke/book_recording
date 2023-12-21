@@ -5,7 +5,9 @@ DATABASE = 'database.db'
 
 @app.route("/", methods=["GET"])
 def index():
-    if 'user_id' in session:
+    if 'user_id' not in session:
+        return redirect("/login")
+    else:
         my_id = session["user_id"]
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
@@ -13,32 +15,34 @@ def index():
             "select * from book where user_id = ?", (my_id,))
         book_list = c.fetchall()
         return render_template("index.html", tpl_book_list=book_list)
-    else:  
-        return redirect("/login")
+     
+        
 
 
 
 @app.route("/create", methods=["GET", "POST"])
 def create():
-    if 'user_id' in session:
-        if request.method == "POST":
-            user_id = session["user_id"]
-            title = request.form.get("title")
-            date = request.form.get("date")
-            conn = sqlite3.connect("database.db")
-            c = conn.cursor()
-            c.execute("insert into book values(null,?,?,?)", (user_id, title, date))
-            conn.commit()
-            conn.close()
-            return redirect("/")
-        else:
-            return render_template("create.html")
-    else:
+    if 'user_id' not in session:
         return redirect("/login")
+    if request.method == "GET":
+        return render_template("create.html")
+    else:
+        user_id = session["user_id"]
+        title = request.form.get("title")
+        date = request.form.get("date")
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("insert into book values(null,?,?,?)", (user_id, title, date))
+        conn.commit()
+        conn.close()
+        return redirect("/")
+        
 
     
 @app.route("/<int:id>/update", methods=["GET", "POST"])
 def update(id):
+    if 'user_id' not in session:
+        return redirect("/login")
     if request.method == "GET":
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
@@ -58,13 +62,17 @@ def update(id):
     
 @app.route("/<int:id>/delete", methods=["GET"])
 def delete(id):
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute(
-    "delete from book where id = ?", (id,))
-    conn.commit()
-    conn.close()
-    return redirect("/")
+    if 'user_id' not in session:
+        return redirect("/login")
+    
+    else:
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+        c.execute(
+        "delete from book where id = ?", (id,))
+        conn.commit()
+        conn.close()
+        return redirect("/")
 
 
 
