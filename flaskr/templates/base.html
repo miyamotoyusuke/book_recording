@@ -6,8 +6,10 @@
     <title>Document</title>
 </head>
 <body>
+    {% if 'user_name' in session %}
     <p> {{session['user_name']}} さん</p>
     <p><a href="/logout">ログアウト</a></p>
+    {% endif %}
     {% block content %}
     {% endblock %}
 </body>
