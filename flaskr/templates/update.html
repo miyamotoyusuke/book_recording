@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="POST">
+    <label for="title">タイトル</label>
+    <input type="text" name="title" value={{ book[2] }}>
+    <label for="date">読了日</label>
+    <input type="date" name="date" value={{ book[3] }}>
+    <input type="submit" value="編集">
+</form>
+
+{% endblock %}

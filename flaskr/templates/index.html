@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>読書記録</h1>
+<div class="bookList">
+    <a href="/create" role="button">新規作成</a>
+    {% for book in tpl_book_list %}
+
+    <div class="books">
+        <h2>{{book[2]}}</h2>
+        <a href="/{{book[0]}}/update" role="button">編集</a>
+        <a href="/{{book[0]}}/delete" role="button">削除</a>
+        <p1>読了日：{{book[3]}}</p1>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock %}
