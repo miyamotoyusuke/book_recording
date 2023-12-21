@@ -1,5 +1,5 @@
 from flaskr import app
-from flask import render_template, request, session, redirect
+from flask import render_template, request, session, redirect, flash
 import sqlite3
 DATABASE = 'database.db'
 
@@ -79,6 +79,8 @@ def delete(id):
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if 'user_id' in session:
+        return redirect("/")
     if request.method == "POST":
         name = request.form.get("name")
         password = request.form.get("password")
@@ -88,7 +90,6 @@ def login():
             "select id from user where name = ? and password = ?", (name, password))
         user_id = c.fetchone()
         conn.close()
-        print(type(user_id))
         if user_id is None:
             return render_template("login.html")
         else:
@@ -101,17 +102,24 @@ def login():
 
 @app.route("/regist", methods=["GET", "POST"])
 def regist():
-    if request.method == "POST":
-        name = request.form.get("name")
-        password = request.form.get("password")
-        conn = sqlite3.connect('database.db')
-        c = conn.cursor()
-        c.execute("insert into user values(null,?,?)", (name, password))
-        conn.commit()
-        conn.close()
-        return redirect("/login")
-    else:
+    if 'user_id' in session:
+        return redirect("/")
+    if request.method == "GET":
         return render_template("regist.html")
+    else:
+        try:
+            name = request.form.get("name")
+            password = request.form.get("password")
+            conn = sqlite3.connect('database.db')
+            c = conn.cursor()
+            c.execute("insert into user values(null,?,?)", (name, password))
+            conn.commit()
+            conn.close()
+            return redirect("/login")
+        except sqlite3.IntegrityError:
+            flash("このユーザー名は既に使用されています")
+            return render_template("regist.html")
+        
 
 # ログアウト
 @app.route("/logout")
