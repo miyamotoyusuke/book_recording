@@ -78,7 +78,9 @@ def delete(id):
 def login():
     if 'user_id' in session:
         return redirect("/")
-    if request.method == "POST":
+    if request.method == "GET":
+        return render_template("login.html")
+    else:
         name = request.form.get("name")
         password = request.form.get("password")
         conn = sqlite3.connect("database.db")
@@ -88,13 +90,11 @@ def login():
         user_id = c.fetchone()
         conn.close()
         if user_id is None:
+            flash("ユーザー名またはパスワードが正しくありません")
             return render_template("login.html")
-        else:
-            session['user_id'] = user_id[0]
-            session['user_name'] = name
-            return redirect("/")
-    else:
-        return render_template("login.html")
+        session['user_id'] = user_id[0]
+        session['user_name'] = name
+        return redirect("/")
 
 
 @app.route("/regist", methods=["GET", "POST"])
