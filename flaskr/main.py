@@ -15,9 +15,6 @@ def index():
             "select * from book where user_id = ?", (my_id,))
         book_list = c.fetchall()
         return render_template("index.html", tpl_book_list=book_list)
-     
-        
-
 
 
 @app.route("/create", methods=["GET", "POST"])
@@ -120,8 +117,6 @@ def regist():
             flash("このユーザー名は既に使用されています")
             return render_template("regist.html")
         
-
-# ログアウト
 @app.route("/logout")
 def logout():
     session.pop('user_id', None)
