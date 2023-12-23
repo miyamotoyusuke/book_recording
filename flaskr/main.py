@@ -122,3 +122,6 @@ def logout():
     session.pop('user_id', None)
     session.pop('user_name', None)
     return redirect("/login")
+
+if __name__ == "__main__":
+    app.run(port=8080)
