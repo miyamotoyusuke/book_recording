@@ -5,6 +5,6 @@
 ![スクリーンショット 2023-12-24 134546](https://github.com/miyamotoyusuke/reading_record/assets/96282869/cf2ce70a-56be-4033-a33d-4aeae591fa45)
 ![スクリーンショット 2023-12-24 134606](https://github.com/miyamotoyusuke/reading_record/assets/96282869/64eac37a-72ea-4da3-b0ff-07a391946794)
 
-*使用技術*
-*a
-*a
+###使用技術
+* a
+* a
