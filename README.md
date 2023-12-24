@@ -6,5 +6,13 @@
 ![スクリーンショット 2023-12-24 134606](https://github.com/miyamotoyusuke/reading_record/assets/96282869/64eac37a-72ea-4da3-b0ff-07a391946794)
 
 ### 使用技術
-* a
-* a
+* HTML
+* CSS
+* Python 3.12.1
+* Flask 3.0.0
+* sqlite3
+* docker
+* git(gitHub)
+
+
+![image](https://github.com/miyamotoyusuke/reading_record/assets/96282869/dd4d6056-d4a0-4448-b844-53b6ccbd24d9)
